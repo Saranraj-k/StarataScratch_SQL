@@ -1,0 +1,6 @@
+SELECT ROUND( AVG(LAT_N), 4 ) AS Median_Latitude FROM 
+( SELECT @rownum:=@rownum+1 
+ AS rownum, s.LAT_N FROM (SELECT @rownum:=0) r, 
+ (SELECT LAT_N FROM STATION ORDER BY LAT_N) s ) 
+ AS subquery 
+ WHERE subquery.rownum IN ( FLOOR((@rownum + 1) / 2), CEIL((@rownum + 1) / 2) );
